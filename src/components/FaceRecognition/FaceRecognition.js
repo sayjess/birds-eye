@@ -1,9 +1,21 @@
+import '../../styles/facerecognition.css'
+
 
 const FaceRecognition = (props) => {
-    const {imageUrl} = props
     return (
-        <div className="hc">
-            <img src={props.imageUrl} alt=""/>
+        <div className="hc ma">
+            <div className="relative mt2">
+                <img id="imageInput" src={props.imageUrl} alt="" width='500px' height='auto'/>
+                <div 
+                className="bounding-box"
+                style={{
+                    top: props.box.topRow,
+                    right: props.box.rightCol,
+                    left: props.box.leftCol,
+                    bottom: props.box.bottomRow,
+
+                }}></div>
+            </div>
         </div>
     )
 }
