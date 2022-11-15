@@ -15,7 +15,6 @@ function App() {
     imageUrl: "",
     box: {},
   });
-  console.log(data)
 
   const app = new Clarifai.App({
     apiKey: '713b9aceeba0424e85061d2360cb4899'
@@ -34,7 +33,6 @@ function App() {
     const image = document.getElementById("imageInput")
     const imageWidth = Number(image.width);
     const imageHeight = Number(image.height);
-    console.log(clarifaiFace)
     return{
       leftCol: clarifaiFace.left_col * imageWidth,
       rightCol: imageWidth - (clarifaiFace.right_col * imageWidth),
