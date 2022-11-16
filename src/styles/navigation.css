@@ -2,3 +2,7 @@ nav{
     display: flex;
     justify-content: flex-end;
 }
+
+p {
+    font-family: 'Roboto Condensed', sans-serif !important;
+}

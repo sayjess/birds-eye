@@ -4,7 +4,7 @@ import '../../styles/facerecognition.css'
 const FaceRecognition = (props) => {
     return (
         <div className="hc ma">
-            <div className="relative mt2">
+            <div className="absolute mt2">
                 <img id="imageInput" src={props.imageUrl} alt="" width='500px' height='auto'/>
                 <div 
                 className="bounding-box"

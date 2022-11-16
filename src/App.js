@@ -1,4 +1,6 @@
 import './App.css';
+import SignIn from './components/SignIn/SignIn';
+import SignUp from './components/SignUp/SignUp';
 import Navigation from './components/Navigation/Navigation';
 import Logo from './components/Logo/Logo';
 import Rank from './components/Rank.js/Rank';
@@ -14,7 +16,9 @@ function App() {
     input: "",
     imageUrl: "",
     box: {},
+    route: 'signin',
   });
+  console.log(data.route) 
 
   const app = new Clarifai.App({
     apiKey: '713b9aceeba0424e85061d2360cb4899'
@@ -61,6 +65,12 @@ function App() {
     .catch(err => console.log(err))
   }
 
+  const onRouteChange = (route) => {
+    setData(val => ({
+      ...val,
+      route: route
+    }))
+  }
   
 
 
@@ -126,11 +136,24 @@ function App() {
                 }
             }}
         />
-      <Navigation />
-      <Logo />
-      <Rank />
-      <ImageLinkForm onInputChange={onInputChangeHandler} onButtonSubmit={onButtonSubmit}/>
-      <FaceRecognition imageUrl={data.imageUrl} box={data.box}/>
+      <Navigation onRouteChange={onRouteChange} route={data.route}/>
+      {data.route === 'home' 
+      ?  
+        <>
+          <Logo />
+          <Rank />
+          <ImageLinkForm onInputChange={onInputChangeHandler} onButtonSubmit={onButtonSubmit}/>
+          <FaceRecognition imageUrl={data.imageUrl} box={data.box}/>
+        </>
+      : 
+      (
+        data.route === 'signin'
+        ?
+        <SignIn onRouteChange={onRouteChange}/>
+        :
+        <SignUp onRouteChange={onRouteChange}/>
+      )
+      }
     </div>
   );
 }
