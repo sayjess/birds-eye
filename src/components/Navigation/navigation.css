@@ -1,0 +1,27 @@
+nav{
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* .nav {
+    background-color: #852999;
+} */
+
+p {
+    font-family: 'Roboto Condensed', sans-serif !important;
+}
+
+/* .logo {
+    width: 50px;
+} */
+
+.nav {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-inline: 5px;
+}
+
+.bg--purple {
+    background-color: #D58BDD;
+}

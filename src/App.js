@@ -1,4 +1,5 @@
 import './App.css';
+// import Main from './components/Main/Main';
 import SignIn from './components/SignIn/SignIn';
 import SignUp from './components/SignUp/SignUp';
 import Navigation from './components/Navigation/Navigation';
@@ -17,8 +18,29 @@ function App() {
     imageUrl: "",
     box: {},
     route: 'signin',
-  });
-  console.log(data.route) 
+    user: {
+      id: "",
+      name: "",
+      email: "",
+      entries: 0,
+      joined: ''
+    }
+  }); 
+
+  const loadUser = (data) => {
+    setData(val => ({
+      ...val,
+      user: {
+        id: data.id,
+        name: data.name,
+        email: data.email,
+        entries: data.entries,
+        joined: data.joined
+      }
+    }))
+    console.log(data)
+
+  }
 
   const app = new Clarifai.App({
     apiKey: '713b9aceeba0424e85061d2360cb4899'
@@ -61,9 +83,29 @@ function App() {
     .predict(
       Clarifai.FACE_DETECT_MODEL, 
       data.input)
-    .then(response => displayBoundingBox(calculateFaceLocation(response)))
+    .then(response => {
+      fetch('http://localhost:3000/image', {
+            method: 'put',
+            headers: {'Content-Type': 'application/json',},
+            body: JSON.stringify({
+                id: data.user.id
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+          setData(val => ({
+            ...val,
+            user: {
+              ...val.user,
+              entries: data.entries
+            }
+          }))
+        })
+      displayBoundingBox(calculateFaceLocation(response))
+    })
     .catch(err => console.log(err))
   }
+  console.log(data)
 
   const onRouteChange = (route) => {
     setData(val => ({
@@ -118,10 +160,10 @@ function App() {
                 particles: {
                     links: {
                         color: "#ffffff",
-                        distance: 200,
+                        distance: 250,
                         enable: true,
-                        opacity: 0.5,
-                        width: 2,
+                        opacity: 0.6,
+                        width: .5,
                     },
                     move: {
                         directions: "none",
@@ -129,7 +171,7 @@ function App() {
                         outModes: {
                             default: "bounce",
                         },
-                        random: false,
+                        random: true,
                         speed: 2,
                         straight: false,
                     },
@@ -137,11 +179,12 @@ function App() {
             }}
         />
       <Navigation onRouteChange={onRouteChange} route={data.route}/>
+      {/* <Main /> */}
       {data.route === 'home' 
       ?  
         <>
           <Logo />
-          <Rank />
+          <Rank userData={data.user}/>
           <ImageLinkForm onInputChange={onInputChangeHandler} onButtonSubmit={onButtonSubmit}/>
           <FaceRecognition imageUrl={data.imageUrl} box={data.box}/>
         </>
@@ -149,9 +192,9 @@ function App() {
       (
         data.route === 'signin'
         ?
-        <SignIn onRouteChange={onRouteChange}/>
+        <SignIn onRouteChange={onRouteChange} loadUser={loadUser}/>
         :
-        <SignUp onRouteChange={onRouteChange}/>
+        <SignUp onRouteChange={onRouteChange} loadUser={loadUser}/>
       )
       }
     </div>

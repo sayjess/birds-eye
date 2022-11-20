@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../styles/imagelinkform.css'
+import './imagelinkform.css'
 
 const ImageLinkForm = (props) => {
     return(
