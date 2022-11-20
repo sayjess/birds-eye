@@ -38,7 +38,6 @@ function App() {
         joined: data.joined
       }
     }))
-    console.log(data)
 
   }
 
@@ -92,12 +91,12 @@ function App() {
             })
         })
         .then(res => res.json())
-        .then(data => {
+        .then(entries => {
           setData(val => ({
             ...val,
             user: {
               ...val.user,
-              entries: data.entries
+              entries: entries
             }
           }))
         })
@@ -105,7 +104,6 @@ function App() {
     })
     .catch(err => console.log(err))
   }
-  console.log(data)
 
   const onRouteChange = (route) => {
     setData(val => ({
