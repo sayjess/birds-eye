@@ -26,6 +26,7 @@ function App() {
     }
   }); 
 
+  console.log(data.box)
   const loadUser = (data) => {
     setData(val => ({
       ...val,
@@ -51,7 +52,8 @@ function App() {
   }
 
   const calculateFaceLocation = (data) => {
-    const clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box;
+    const clarifaiFace = data
+    // console.log(data)
     const image = document.getElementById("imageInput")
     const imageWidth = Number(image.width);
     const imageHeight = Number(image.height);
@@ -82,31 +84,25 @@ function App() {
         input: data.input
         })
       })
-      .then(res => {
-        console.log(res)
-        res.json()
-      })
+      .then(res => res.json())
       .then(response => {
-        fetch('https://maskine-api.herokuapp.com/image', {
-          method: 'put',
-          headers: {'Content-Type': 'application/json',},
-          body: JSON.stringify({
-              id: data.user.id
+        if (response) {
+          fetch('https://maskine-api.herokuapp.com/image', {
+            method: 'put',
+            headers: {'Content-Type': 'application/json',},
+            body: JSON.stringify({
+                id: data.user.id
+            })
           })
-        })
-        .then(res => res.json())
-        .then(entries => {
-          setData(val => ({
-            ...val,
-            user: {
-              ...val.user,
-              entries: entries
-            }
-          }))
-        })
-      displayBoundingBox(calculateFaceLocation(response))
-    })
-    .catch(err => console.log(err))
+          .then(res => res.json())
+          .then(entries => {
+            setData(val => ({...val,user: {...val.user,entries: entries}}))
+          })
+          .catch(console.log)
+        }
+        displayBoundingBox(calculateFaceLocation(response))
+      })
+      .catch(err => console.log(err))
   }
 
   const onRouteChange = (route) => {
