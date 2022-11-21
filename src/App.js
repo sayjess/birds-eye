@@ -75,7 +75,7 @@ function App() {
       ...val,
       imageUrl: data.input
     }))
-    fetch('http://localhost:3000/imageurl', {
+    fetch('https://maskine-api.herokuapp.com/imageurl', {
       method: 'post',
       headers: {'Content-Type': 'application/json',},
       body: JSON.stringify({
@@ -84,7 +84,7 @@ function App() {
       })
       .then(res => res.json())
       .then(response => {
-        fetch('http://localhost:3000/image', {
+        fetch('https://maskine-api.herokuapp.com/image', {
           method: 'put',
           headers: {'Content-Type': 'application/json',},
           body: JSON.stringify({
