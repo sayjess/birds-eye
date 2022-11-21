@@ -82,7 +82,10 @@ function App() {
         input: data.input
         })
       })
-      .then(res => res.json())
+      .then(res => {
+        console.log(res)
+        res.json()
+      })
       .then(response => {
         fetch('https://maskine-api.herokuapp.com/image', {
           method: 'put',
