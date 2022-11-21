@@ -45,11 +45,6 @@ const SignIn =(props) => {
         })
     }
 
-    //use this feature to pop up invalid credentials when credentials are not present in database
-    if(formData.signInConfirmation === false){
-        console.log("invalid credentials")
-    } 
-
     return (
         <article className="br3 ba shadow-4 b--black-10 mv5 w-100 w-50-m w-25-l mw6 center bw1">
             <main className="pa4 black-80">

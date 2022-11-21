@@ -10,7 +10,6 @@ import FaceRecognition from './components/FaceRecognition/FaceRecognition';
 import React, { useCallback } from "react";
 import Particles from "react-tsparticles";
 import { loadFull } from "tsparticles";
-import Clarifai from "clarifai";
 
 function App() {
   const [data, setData] = React.useState({
@@ -41,9 +40,7 @@ function App() {
 
   }
 
-  const app = new Clarifai.App({
-    apiKey: '713b9aceeba0424e85061d2360cb4899'
-   });
+
 
   const onInputChangeHandler = (event) => {
     const userInput = event.target.value
@@ -73,22 +70,26 @@ function App() {
     }))
   }
 
-  const onButtonSubmit = () => {
+  const onPictureSubmit = () => {
     setData(val => ({
       ...val,
       imageUrl: data.input
     }))
-    app.models
-    .predict(
-      Clarifai.FACE_DETECT_MODEL, 
-      data.input)
-    .then(response => {
-      fetch('http://localhost:3000/image', {
-            method: 'put',
-            headers: {'Content-Type': 'application/json',},
-            body: JSON.stringify({
-                id: data.user.id
-            })
+    fetch('http://localhost:3000/imageurl', {
+      method: 'post',
+      headers: {'Content-Type': 'application/json',},
+      body: JSON.stringify({
+        input: data.input
+        })
+      })
+      .then(res => res.json())
+      .then(response => {
+        fetch('http://localhost:3000/image', {
+          method: 'put',
+          headers: {'Content-Type': 'application/json',},
+          body: JSON.stringify({
+              id: data.user.id
+          })
         })
         .then(res => res.json())
         .then(entries => {
@@ -112,7 +113,21 @@ function App() {
     }))
   }
   
-
+  const initialState = () => {
+    setData(val => ({
+      input: "",
+      imageUrl: "",
+      box: {},
+      route: 'signin',
+      user: {
+        id: "",
+        name: "",
+        email: "",
+        entries: 0,
+        joined: ''
+      }
+    }))
+  }
 
   const particlesInit = useCallback(async engine => {
     // you can initiate the tsParticles instance (engine) here, adding custom shapes or presets
@@ -176,14 +191,14 @@ function App() {
                 }
             }}
         />
-      <Navigation onRouteChange={onRouteChange} route={data.route}/>
+      <Navigation onRouteChange={onRouteChange} initialState={initialState} route={data.route}/>
       {/* <Main /> */}
       {data.route === 'home' 
       ?  
         <>
           <Logo />
           <Rank userData={data.user}/>
-          <ImageLinkForm onInputChange={onInputChangeHandler} onButtonSubmit={onButtonSubmit}/>
+          <ImageLinkForm onInputChange={onInputChangeHandler} onPictureSubmit={onPictureSubmit}/>
           <FaceRecognition imageUrl={data.imageUrl} box={data.box}/>
         </>
       : 

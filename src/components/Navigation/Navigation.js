@@ -1,8 +1,12 @@
 import React from "react";
 import './navigation.css'
-import logo from '../../images/logo.png'
+// import logo from '../../images/logo.png'
 
 const Navigation = (props) => {
+    const logout = () => {
+        props.onRouteChange('signin');
+        props.initialState();
+    }
         if(props.route === "home"){
             return (
                 <div className="nav">
@@ -10,7 +14,7 @@ const Navigation = (props) => {
                         <img src={logo} alt="logo" className="logo"/>
                     </div> */}
                     <nav className="">
-                    <p onClick={() => props.onRouteChange('signin')} className="f5 br-pill b--black bw1 b--solid link black  ma3 pa2 grow pointer calisto ph4">Sign Out</p>
+                    <p onClick={logout} className="f5 br-pill b--black bw1 b--solid link black  ma3 pa2 grow pointer calisto ph4">Sign Out</p>
                     </nav>
                 </div>
             )

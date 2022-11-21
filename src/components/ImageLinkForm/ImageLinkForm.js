@@ -9,7 +9,7 @@ const ImageLinkForm = (props) => {
                 <div className='form pa4 br3 shadow-5'>
                     <input onChange={props.onInputChange} className='f4 pa2 w-70 center' type='text' />
                     <button 
-                    onClick={props.onButtonSubmit} 
+                    onClick={props.onPictureSubmit} 
                     className='w-20 grow f4 link ph3 pv2 dib white bg-light-purple'><i className="black fa-solid fa-users-viewfinder"></i></button>
                 </div>
             </div>

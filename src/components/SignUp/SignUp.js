@@ -5,7 +5,7 @@ const SignUp =(props) => {
         email: "",
         password: "",
         name: "",
-        confirmed: true,
+        signInConfirmation: true,
     }
     )
 
@@ -30,9 +30,16 @@ const SignUp =(props) => {
         })
         .then(res => res.json())
         .then(data => {
-            if(data){
+            if(data.id){
+                console.log()
                 props.loadUser(data)
                 props.onRouteChange('home')
+            }
+            else {
+                setFormData(val => ({
+                    ...val,
+                    signInConfirmation: false
+                  }))
             }
         })
         
@@ -43,6 +50,12 @@ const SignUp =(props) => {
                 <div className="measure center">
                     <fieldset id="sign_up" className="ba b--transparent ph0 mh0">
                         <legend className="tc f2 fw6 ph0 mh0">Sign Up</legend>
+                        {!formData.signInConfirmation && <div className="pt3 flex items-center pb0">
+                            <i className="fa-solid fa-circle-exclamation light warning bg-black br-100"></i> 
+                            <p className="pl2">
+                            Please try again
+                            </p>
+                        </div>}
 
                     {/* NAME */}
                         <div className="mt3">
