@@ -31,7 +31,6 @@ const SignUp =(props) => {
         .then(res => res.json())
         .then(data => {
             if(data.id){
-                console.log()
                 props.loadUser(data)
                 props.onRouteChange('home')
             }

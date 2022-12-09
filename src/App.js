@@ -26,7 +26,6 @@ function App() {
     }
   }); 
 
-  console.log(data.box)
   const loadUser = (data) => {
     setData(val => ({
       ...val,
@@ -53,7 +52,6 @@ function App() {
 
   const calculateFaceLocation = (data) => {
     const clarifaiFace = data
-    // console.log(data)
     const image = document.getElementById("imageInput")
     const imageWidth = Number(image.width);
     const imageHeight = Number(image.height);
