@@ -19,7 +19,7 @@ const SignUp =(props) => {
     }
 
     const onSignUpSubmit = (event) => {
-        fetch('https://maskine-api.herokuapp.com/signup', {
+        fetch('https://maskine-api.onrender.com/signup', {
             method: 'post',
             headers: {'Content-Type': 'application/json',},
             body: JSON.stringify({

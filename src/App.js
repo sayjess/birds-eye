@@ -77,7 +77,7 @@ function App() {
       ...val,
       imageUrl: data.input
     }))
-    fetch('https://maskine-api.herokuapp.com/imageurl', {
+    fetch('https://maskine-api.onrender.com/imageurl', {
       method: 'post',
       headers: {'Content-Type': 'application/json',},
       body: JSON.stringify({
@@ -87,7 +87,7 @@ function App() {
       .then(res => res.json())
       .then(response => {
         if (response) {
-          fetch('https://maskine-api.herokuapp.com/image', {
+          fetch('https://maskine-api.onrender.com/image', {
             method: 'put',
             headers: {'Content-Type': 'application/json',},
             body: JSON.stringify({
